@@ -364,31 +364,7 @@ class Intra_context(nn.Module):
         #*********新增代码结束**********
 
         as_features = torch.cat([graph_enc_outputs + con_con_out + bert_enc_outputs, bert_pooler_out],-1)
-        return as_features
-
-    def cof1(self, M,index):
-        zs = M[:index[0]-1,:index[1]-1]
-        ys = M[:index[0]-1,index[1]:]
-        zx = M[index[0]:,:index[1]-1]
-        yx = M[index[0]:,index[1]:]
-        s = torch.cat((zs,ys),axis=1)
-        x = torch.cat((zx,yx),axis=1)
-        return torch.det(torch.cat((s,x),axis=0))
-    
-    def alcof(self, M,index):
-        return pow(-1,index[0]+index[1])*self.cof1(M,index)
-    
-    def adj(self, M):
-        result = torch.zeros((M.shape[0],M.shape[1]))
-        result = result.to(self.args.device)
-        for i in range(1,M.shape[0]+1):
-            for j in range(1,M.shape[1]+1):
-                result[j-1][i-1] = self.alcof(M,[i,j])
-        return result
-    
-    def invmat(self, M):
-        return 1.0/torch.det(M)*self.adj(M)
-        
+        return as_features     
 
 # Inter-context module
 class Inter_context(nn.Module):
