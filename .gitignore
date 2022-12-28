@@ -8,3 +8,11 @@ log/MAMS/training_2022-10-17-17_22_20.log
 log/MAMS/training_2022-10-17-17_25_19.log
 log/MAMS/training_2022-10-17-17_26_25.log
 __pycache__/vocab.cpython-38.pyc
+.ipynb_checkpoints/dataloader-checkpoint.py
+.ipynb_checkpoints/layer-checkpoint.py
+.ipynb_checkpoints/model-checkpoint.py
+log/
+.ipynb_checkpoints/
+.vscode/
+.__pycache__/
+__pycache__/train.cpython-38.pyc

@@ -23,6 +23,7 @@ def get_parameter():
     parser.add_argument('--input_dropout', type=float, default=0.1, help='input dropout rate.')
     parser.add_argument('--layer_dropout', type=float, default=0.0, help='layer dropout rate.')
     parser.add_argument('--attn_dropout', type=float, default=0.0, help='self-attention layer dropout rate.')
+    parser.add_argument('--con_attn_dropout', type=float, default=0.1, help='con-con-det-product')
 
     parser.add_argument('--lower', default=True, help = 'lowercase all words.')
     parser.add_argument('--need_preprocess', default=False, help = 'need parse data.')
@@ -54,6 +55,12 @@ def get_parameter():
     parser.add_argument('--adj_span_version', type=int, default=0)
 
     parser.add_argument('--aa_num_layer', type=int, default=6, help='control aa module')
+
+    # *************新增代码结束**************
+    parser.add_argument('--num_layers', type=int, default=1, help='gcn layers')
+    parser.add_argument('--gcn_dim', type=int, default=200)
+    
+    # *************新增代码开始**************
     # aa_graph_version
     parser.add_argument('--aa_graph_version', type=int, default=1, help = 'for aspect graph')
     parser.add_argument('--aspect_graph_num_layer', default=2,  type=int,help='for aspect_graph')
@@ -129,12 +136,12 @@ def load_one_data(args, file_name, vocab, tokenizer, block_shuffle = True, is_sh
     print('Loading data from {} with batch size {}...'.format(file_name, args.batch_size))
     one_dataset = ABSA_Dataset(args, file_name, vocab, tokenizer)
 
-    if block_shuffle and is_shuffle:
+    if block_shuffle and is_shuffle: # 这里仅仅初始化了对象，没有处理
         one_dataloader = ABSA_DataLoader(one_dataset, 
-                                        sort_key = lambda x: x[args.sort_key_idx],
+                                        sort_key = lambda x: x[args.sort_key_idx], # ？？
                                         is_shuffle = is_shuffle,
                                         batch_size = args.batch_size,
-                                        collate_fn = ABSA_collate_fn
+                                        collate_fn = ABSA_collate_fn # ？？
                                         )
     else:
         one_sampler = RandomSampler(one_dataset) if is_shuffle else SequentialSampler(one_dataset)

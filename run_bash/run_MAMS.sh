@@ -8,8 +8,8 @@ fi
 
 DATE=$(date +%Y-%m-%d-%H_%M_%S)
 CUDA_VISIBLE_DEVICES=0 python3 -u train.py \
-	--data_dir data/V2/MAMS \
-	--vocab_dir data/V2/MAMS \
+	--data_dir data/V2/Tweets \
+	--vocab_dir data/V2/Tweets \
 	--batch_size 32 \
 	--input_dropout 0.2 \
 	--layer_dropout 0.1 \
